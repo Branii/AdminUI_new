@@ -14,6 +14,7 @@
   <!-- Core Css -->
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/styles.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>Limvo Admin</title>
   
@@ -35,6 +36,7 @@
       /* Custom Scrollbar for Webkit Browsers */
       .table-wrapper::-webkit-scrollbar {
         height: 8px; 
+        background-color: red;
       }
 
       .table-wrapper::-webkit-scrollbar-track {
@@ -86,65 +88,7 @@
 
         <hr>
 
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-            <ul id="sidebarnav">
-        
-            <li class="tab-button sidebar-item" value="modern">
-                <a class="sidebar-link" id="get-url" aria-expanded="false">
-                <span>
-                    <i class="ti ti-aperture"></i>
-                </span>
-                <span class="hide-menu">Modern</span>
-                </a>
-            </li>
-
-            <li class="tab-button sidebar-item" value="commerce">
-                <a class="sidebar-link" aria-expanded="false">
-                <span>
-                    <i class="ti ti-shopping-cart"></i>
-                </span>
-                <span class="hide-menu">eCommerce</span>
-                </a>
-            </li>
-
-            <li class="tab-button sidebar-item" value="ntf">
-                <a class="sidebar-link"  aria-expanded="false">
-                <span>
-                    <i class="ti ti-currency-dollar"></i>
-                </span>
-                <span class="hide-menu">NFT</span>
-                </a>
-            </li>
-
-            <li class="tab-button sidebar-item" value="crypto">
-                <a class="sidebar-link"  aria-expanded="false">
-                <span>
-                    <i class="ti ti-cpu"></i>
-                </span>
-                <span class="hide-menu">Crypto</span>
-                </a>
-            </li>
-            
-            <li class="tab-button sidebar-item" value="general">
-                <a class="sidebar-link"  aria-expanded="false">
-                <span>
-                    <i class="ti ti-activity-heartbeat"></i>
-                </span>
-                <span class="hide-menu">General</span>
-                </a>
-            </li>
-
-            <li class="tab-button sidebar-item" value="music">
-                <a class="sidebar-link"  aria-expanded="false">
-                <span>
-                    <i class="ti ti-playlist"></i>
-                </span>
-                <span class="hide-menu">Music</span>
-                </a>
-            </li>
-
-            </ul>
-        </nav>
+        <?php include 'sidebar.php' ?>
 
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
           <div class="hstack gap-3">
@@ -1030,10 +974,54 @@
   <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/js/home.js"></script>
+  <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script>
+  <script>
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const tableWrapper = document.querySelector('.table-wrapper');
+//   const rangeInput = document.getElementById('customRange1');
+
+//   if (!tableWrapper || !rangeInput) {
+//     console.error("Table wrapper or range input not found!");
+//     return;
+//   }
+
+//   // Function to update the max value of the range input based on scrollable width
+//   const updateRangeMax = () => {
+//     const maxScrollLeft = tableWrapper.scrollWidth - tableWrapper.clientWidth;
+//     rangeInput.max = maxScrollLeft > 0 ? maxScrollLeft : 0;
+//   };
+
+//   // Initial setup to set the range max value
+//   updateRangeMax();
+
+//   // Smooth scrolling based on range input
+//   rangeInput.addEventListener('input', function () {
+//     tableWrapper.scrollTo({
+//       left: this.value,
+//       behavior: 'smooth'
+//     });
+//   });
+
+//   // Update the range slider based on the table's scroll position
+//   tableWrapper.addEventListener('scroll', function () {
+//     rangeInput.value = tableWrapper.scrollLeft;
+//   });
+
+//   // Adjust range max value on window resize
+//   window.addEventListener('resize', updateRangeMax);
+
+//   // Listen for table content load (if dynamic content is added)
+//   const observer = new MutationObserver(updateRangeMax);
+//   observer.observe(tableWrapper, { childList: true, subtree: true });
+// });
+
+
+  </script>
 </body>
 
 </html>

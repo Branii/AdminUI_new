@@ -10,8 +10,8 @@ class Model extends MEDOOHelper{
                 'message'=> 'sign in successful',
                 'email' => $email,
                 'role' => $res['role'],
-                'Oauth' => $res['status'] == 'on' ? '../limvo/admin/Oauth' : 'Off',
-                'url' => '../limvo/admin/home'
+                'Oauth' => $res['status'] == 'on' ? '../admin/Oauth' : 'Off',
+                'url' => '../admin/home'
             ];
         }else{
             return [
@@ -24,10 +24,11 @@ class Model extends MEDOOHelper{
     public static function getAllUsers($page, $limit) {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT uid, username, nickname, user_email, user_dob FROM users LIMIT :offset, :limit",
+            "SELECT uid, username, nickname, user_email, user_dob, user_contact, company, agent, balance, rebate FROM users LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
-        return $data;
+        $totalRecords  = parent::count('users');
+        return ['data' => $data, 'total' => $totalRecords];
     }
 
     public static function paginateAllUsers(mixed $currentPage, mixed $itemPerPage) {

@@ -12,7 +12,7 @@ $(function () {
   
       chart: {
         type: "bar",
-        height: 600,
+        height: 675,
         width: '100%',
         offsetX: -15,
         toolbar: { show: true },
@@ -171,8 +171,8 @@ $(function () {
       },
     };
   
-    var chart = new ApexCharts(document.querySelector("#breakup"), breakup);
-    chart.render();
+    // var chart = new ApexCharts(document.querySelector("#breakup"), breakup);
+    // chart.render();
   
   
   
@@ -222,5 +222,5 @@ $(function () {
         },
       },
     };
-    new ApexCharts(document.querySelector("#earning"), earning).render();
+   // new ApexCharts(document.querySelector("#earning"), earning).render();
   })
