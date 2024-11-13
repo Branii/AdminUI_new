@@ -61,8 +61,14 @@
             <div class="form-group">
                       <input type="text́" class="searchh form-control" />
                     </div>
+
+                    
                     <span type="button" class="go btn bg-primary-subtle text-primary">
                       Primary
+                    </span>
+
+                    <span type="button" class="refresh btn bg-primary-subtle text-primary">
+                      refresh
                     </span>
             </div>
             <div class="px-4 py-3 border-bottom">

@@ -173,4 +173,13 @@ $(".go").click(function(){
    searchUsers(currentPage,searchkey)
 })
 
+$(".refresh").click(function(){
+
+  $("#dataContainer").LoadingOverlay("show", {
+    background  : "rgb(238,243,255,0.5)",
+    size:5
+});
+
+})
+
 });
