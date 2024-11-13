@@ -57,3 +57,7 @@ foreach ($allUsers as $user) {
 
 
  ?>
+
+
+UPDATE users
+SET username = CONCAT(username, ' test') WHERE uid > 100;

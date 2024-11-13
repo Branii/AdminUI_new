@@ -51,12 +51,10 @@ $(function () {
 
   async function fetchUsers(page) {
     try {
-      const response = await fetch(`../homedata/${page}/${pageLimit}`);
+      const response = await fetch(`../admin/homedata/${page}/${pageLimit}`);
       const data = await response.json();
-
       // Render table data
       render(data.users);
-
       // Render pagination
       renderPagination(data.totalPages, page);
     } catch (error) {
@@ -64,7 +62,22 @@ $(function () {
     }
   }
 
-  function renderPagination(totalPages, currentPage) {
+  async function searchUsers(page,searchKey) {
+    try {
+      const response = await fetch(`../admin/search/${searchKey}/${page}/${pageLimit}`);
+      const data = await response.json();
+
+      console.log(data);
+      // Render table data
+      render(data.users);
+      // Render pagination
+      renderPagination(data.totalPages, page, 'search', searchKey);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  function renderPagination(totalPages, currentPage, pagingType = '', searchKey) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
 
     // Previous Button
@@ -112,7 +125,7 @@ $(function () {
         const newPage = parseInt(this.getAttribute("data-page"));
         if (newPage > 0 && newPage <= totalPages) {
           currentPage = newPage;
-          fetchUsers(currentPage);
+          pagingType == 'search' ?  searchUsers(currentPage,searchKey) : fetchUsers(currentPage);
         }
       });
     });
@@ -155,23 +168,9 @@ $(".player").click(function(){
     }
 })
 
-  const scrollTable = (direction) => {
-        
-    console.log(direction);
-   
-    // switch (direction) {
-    //   case 'end':
-    //     // Scroll to the absolute end (rightmost position)
-    //     const tableWrapper = document.querySelector(".table-wrapper");
-    //     if (tableWrapper) {
-    //         const maxScrollLeft = tableWrapper.scrollWidth - tableWrapper.clientWidth;
-    //         tableWrapper.scrollTo({ left: maxScrollLeft, behavior: 'smooth' });
-    //       }
-    //     break;
-    //   default:
-    //     break;
-    // }
-  };
-
+$(".go").click(function(){
+  let searchkey = $(".searchh").val()
+   searchUsers(currentPage,searchkey)
+})
 
 });

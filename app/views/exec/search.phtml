@@ -1,0 +1,14 @@
+<?php 
+header('Content-Type: application/json');
+
+$searchKey = isset($this->viewData['searchkey']) ? $this->viewData['searchkey'] : 'notfound';
+$page = isset($this->viewData['page']) ? (int)$this->viewData['page'] : 1;
+$limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] : 20;
+$result = (new Model() )->searchUser($searchKey,$page, $limit) ?? [];
+
+echo json_encode([
+    'users' => $result['data'],
+    'totalPages' => ceil($result['total'] / $limit)
+]);
+
+

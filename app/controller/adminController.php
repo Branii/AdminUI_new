@@ -22,4 +22,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function search($searchKey,$pageNumber,$limit){
+        $this->view('exec/search',data: ['searchkey' => $searchKey, 'page'=> $pageNumber,'limit'=> $limit]);
+        $this->view->render();
+    }
+
 }

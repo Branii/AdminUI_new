@@ -58,7 +58,12 @@
 </style>
 <div class="card w-100 position-relative overflow-hidden">
             <div class="px-4 py-3 border-bottom">
-              <h4 class="card-title mb-0">Basic Table</h4>
+            <div class="form-group">
+                      <input type="text́" class="searchh form-control" />
+                    </div>
+                    <span type="button" class="go btn bg-primary-subtle text-primary">
+                      Primary
+                    </span>
             </div>
             <div class="px-4 py-3 border-bottom">
               <h4 class="card-title mb-0">Basic Table</h4>

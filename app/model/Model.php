@@ -31,23 +31,25 @@ class Model extends MEDOOHelper{
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-    public static function paginateAllUsers(mixed $currentPage, mixed $itemPerPage) {
-
-        $totalRecords  = parent::count('users');
-        $pages = ceil($totalRecords / $itemPerPage) ?? 1;
-
-        $pagination = [
-            'prev' => ($currentPage > 1) ? $currentPage - 1 : 1,
-            'next' => ($currentPage < $pages) ? $currentPage + 1 : $pages,
-            'pages' => []
-        ];
-
-        for ($i = 1; $i <= $pages; $i++) {
-            $pagination['pages'][] = $i;
-        }
-
-        return $pagination;
-
+    public static function searchUser($searchKey,$page,$limit) {
+        $offset = ($page - 1) * $limit;
+    
+        // Fetch the paginated user data
+        $data = parent::query(
+            "SELECT uid, username, nickname, user_email, user_dob, user_contact, company, agent, balance, rebate FROM users 
+             WHERE username LIKE :username 
+             LIMIT {$limit} OFFSET {$offset}",
+            ["username" => "%{$searchKey}%"]
+        );
+    
+        // Fetch the total count of users matching the search criteria
+        $totalCount = parent::query(
+            "SELECT uid, username, nickname, user_email, user_dob, user_contact, company, agent, balance, rebate FROM users 
+             WHERE username LIKE :username ",["username" => "%{$searchKey}%"]
+        );
+    
+        // Return paginated data along with the total count
+        return ['data' => $data, 'total' => count($totalCount)];
     }
 
 
