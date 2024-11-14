@@ -139,7 +139,7 @@
 
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="right" aria-label="Refresh"
+        <button type="button" class="btn bg-white-subtle player refresh" value="right" aria-label="Refresh"
         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
@@ -154,43 +154,37 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered">
         <thead class="text-dark fs-4">
           <tr>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Id</h6>
+              <h6 class="fs-4 fw-semibold mb-0">ID Number</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User NickName</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Transaction Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Email</h6>
+              <h6 class="fs-4 fw-semibold mb-0"> Amount </h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Dob</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Balance</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Contact</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Date/Time</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Company</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Transaction ID</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Agent</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
             </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Balance</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Rebate</h6>
-            </th>
-            <th>
+            <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
-            </th>
+            </th> -->
           </tr>
         </thead>
         <tbody id="dataContainer">

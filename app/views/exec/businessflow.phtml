@@ -3,7 +3,9 @@ header('Content-Type: application/json');
 
 $page = isset($this->viewData['page']) ? (int)$this->viewData['page'] : 1;
 $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] : 20;
-$result = (new Model() )->getAllUsers($page, $limit) ?? [];
+$result = (new BusinessFlow() )->FetchTrsansactionData($page, $limit) ?? [];
+
+//echo json_encode($result);
 
 echo json_encode([
     'users' => $result['data'],

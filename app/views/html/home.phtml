@@ -37,22 +37,28 @@
 
     /* Custom Scrollbar for Webkit Browsers */
     .table-wrapper::-webkit-scrollbar {
-      height: 8px;
-      background-color: red;
+      width: 5px;
+      /* Slimmer scrollbar width */
+      height: 5px;
+      /* Slimmer scrollbar height for horizontal scrolling */
     }
 
     .table-wrapper::-webkit-scrollbar-track {
       background: #f1f1f1;
-      border-radius: 10px;
+      /* Lighter background for track */
+      border-radius: 5px;
     }
 
     .table-wrapper::-webkit-scrollbar-thumb {
-      background-color: #DEE1E6;
+      background-color: #ccc;
+      /* Blue color for thumb */
       border-radius: 10px;
+      cursor:pointer;
     }
 
     .table-wrapper::-webkit-scrollbar-thumb:hover {
-      background-color: #ccc;
+      background-color: #aaa;
+      /* Darker blue on hover */
     }
   </style>
 </head>
@@ -109,9 +115,9 @@
               <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
               <span class="fs-2">Designer</span>
             </div>
-         
-            <div class="dropdown" aria-label="logout"
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Profile">
+
+            <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="Profile">
               <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <i class='bx bx-dots-vertical-rounded'></i>
@@ -120,11 +126,11 @@
                 style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
                   href="javascript:void(0);">
-                  <i class='bx bx-user-check'></i>View
+                  <i class='bx bx-user-check'></i>Add User
                 </a>
                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
                   href="javascript:void(0);">
-                  <i class='bx bx-pencil'></i>Edit
+                  <i class='bx bx-pencil'></i>Change Password
                 </a>
                 <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1"
                   href="javascript:void(0);">
@@ -966,7 +972,7 @@
           </div>
 
           <div class="chrome__tab account_transaction">
-            <?php include "tabs/account_transaction.php" ?>
+            <?php include "tabs/businessflow/account_transaction.php" ?>
           </div>
 
           <div class="chrome__tab game_getting_statistics">
@@ -1002,12 +1008,16 @@
     <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/home.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script>
 
       // document.addEventListener('DOMContentLoaded', function () {
