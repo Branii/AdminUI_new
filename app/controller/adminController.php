@@ -34,9 +34,16 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    // public function transactdata($pageNumber,$limit){
-    //     $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'account_transactions']);
-    //     $this->view->render();
-    // }
+    public function filterusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'filterusername']);
+        $this->view->render();
+    }
 
+    public function getOrderid(){
+        $this->view('exec/businessflow',['flag' => 'getOrderid']);
+        $this->view->render();
+    }
+
+
+    
 }

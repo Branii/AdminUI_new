@@ -11,7 +11,7 @@ class Model extends MEDOOHelper{
                 'email' => $email,
                 'role' => $res['role'],
                 'Oauth' => $res['status'] == 'on' ? '../admin/Oauth' : 'Off',
-                'url' => '../admin/home'
+                'url' => '../limvo/admin/home'
             ];
         }else{
             return [

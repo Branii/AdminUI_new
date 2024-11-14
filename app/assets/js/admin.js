@@ -13,7 +13,7 @@ $(function(){
         evt.preventDefault()
         let params = {username: $(".username").val().trim(),password: $(".password").val().trim()};
         let isEmpty = Object.values(params).some(param => param === "");
-        !isEmpty ? request('../admin/signin',params) : console.log("One or more fields are empty");
+        !isEmpty ? request('../limvo/admin/signin',params) : console.log("One or more fields are empty");
     })
 
 })

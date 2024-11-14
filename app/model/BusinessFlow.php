@@ -12,25 +12,23 @@ class BusinessFlow extends MEDOOHelper{
             ['offset' => $startpoint, 'limit' => $limit] 
         ); 
         $totalRecords  = parent::count('transaction');
-        return ['data' => $data, 'total' => $totalRecords];
+        $trasationIds = array_column($data,'order_id');
+        return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
     } 
 
 
-    public static function getUserName($uid): String 
-    { 
-        return parent::selectOne("users", ["username"], ["uid" => $uid])['username']; 
-    } 
+
+    public static function filterusername(string $username){
+        $data = parent::query("SELECT username FROM users WHERE username LIKE :username ORDER BY username ASC",['username' => "%{$username}%"]);
+        return $data;
+    }
+
+
+    public static function getOrderid(){
+        $data = parent::query("SELECT order_type FROM transaction  ORDER BY trans_id ASC");
+        return $data;
+    }
  
-    public static function getLottery($gameId): String 
-    { 
-        return parent::selectOne("game_type", ["name"], ["gt_id" => $gameId])['name']; 
-    } 
- 
-    public static function getbetID($oder_ID, $beTable) 
-    { 
-        $betTable = Utils::getGameIdsByGameType()[$beTable]['bet_table']; 
-         return  $result = parent::selectOne($betTable, ["bid"], ["bet_code" => $oder_ID])['bid'] ?? 1; 
-    } 
  
  
 }

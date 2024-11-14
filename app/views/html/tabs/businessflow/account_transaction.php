@@ -79,13 +79,39 @@
     max-width: 100%;
     /* Adjust based on your needs */
     margin-bottom: 10px;
-    /* Space between table and scrollbar */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: rgb(38, 57, 77) 0px 20px 30px -10px;
+    /* Ensure it doesn't interfere with content */
+    z-index: 10;
   }
 
   .queryholder {
-    width: 12%;
+    width: 19%;
     margin-right: 5px;
     background-color: #FFF;
+  }
+
+  .user-option {
+    width: 100%;
+    /* Makes each option fill the select width */
+    white-space: nowrap;
+    /* Prevents text from wrapping */
+    text-align: left;
+    /* Adds some spacing inside the option */
+    border-bottom: solid 1px #ccc;
+  }
+
+  .user-option:hover {
+    background-color: #eee;
+  }
+
+  #userDropdown {
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
@@ -95,39 +121,38 @@
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example"
-        style="padding:5px;width:auto">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
 
-     
-          <input type="text" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-        
 
-       
-          <input type="text" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-     
+        <input type="text" class="form-control queryholder username" id="nametext" aria-describedby="name"
+          placeholder="Name" />
+        <div id="userDropdown" class=" form-control " size="5"
+          style="background-color:#fff;position: absolute; top: 90%; width: 19%; display: none; z-index: 1000;">
 
-    
-          <input type="text" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-       
+        </div>
 
-      
-          <input type="text" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-     
 
-    
-          <input type="date" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-        
+        <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"placeholder ="enter oderid">
 
-    
-          <input type="date" class="form-control queryholder" id="nametext" aria-describedby="name"
-            placeholder="Name" />
-      
+
+        <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
+          <option value="all">all</option>
+          <option value="1">Deposit</option>
+          <option value="2">Win Bonus</option>
+          <option value="3">Bet Awarded</option>
+          <option value="4">Withdrawal</option>
+          <option value="6">Bet Cancelled</option>
+        </select>
+
+
+
+        <input type="date" class="form-control queryholder startdate" id="nametext" aria-describedby="name" placeholder="Name" />
+
+
+
+        <input type="date" class="form-control queryholder enddate" id="nametext" aria-describedby="name" placeholder="Name" />
+
 
 
       </div>
@@ -140,12 +165,12 @@
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
         <button type="button" class="btn bg-white-subtle player refresh" value="right" aria-label="Refresh"
-        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end" aria-label="Execute"
-        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-          <i class='bx bx-check-double' style="font-size:20px"></i>
+        <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+          <i class='bx bx-check-double loader' style="font-size:20px"></i>
         </button>
       </div>
 
@@ -154,7 +179,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered">
         <thead class="text-dark fs-4">
           <tr>
@@ -182,9 +207,9 @@
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Status</h6>
             </th>
-            <!-- <th>
+            <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
-            </th> -->
+            </th>
           </tr>
         </thead>
         <tbody id="dataContainer">

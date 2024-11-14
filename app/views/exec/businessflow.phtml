@@ -1,13 +1,36 @@
-<?php 
+<?php
 header('Content-Type: application/json');
 
-$page = isset($this->viewData['page']) ? (int)$this->viewData['page'] : 1;
-$limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] : 20;
-$result = (new BusinessFlow() )->FetchTrsansactionData($page, $limit) ?? [];
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
-//echo json_encode($result);
+if ($flag == "filterusername") {
 
-echo json_encode([
-    'users' => $result['data'],
-    'totalPages' => ceil($result['total'] / $limit)
-]);
+    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $result = (new BusinessFlow())->filterusername($username);
+    if($result){
+        echo json_encode($result);
+    }else{
+        echo json_encode([['username'=>'']]);
+    }
+
+} 
+if($flag == "transactiondata") {
+
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = (new BusinessFlow())->FetchTrsansactionData($page, $limit) ?? [];
+    echo json_encode([
+        'users' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+        'trasationIds' => $result['transactionIds']
+    ]);
+
+}
+
+if ($flag == "getOrderid") {
+    $result = (new BusinessFlow())->getOrderid();
+    echo json_encode($result);
+} 
+
+
+

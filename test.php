@@ -39,3 +39,20 @@
         <!-- ---------------------------------- -->
       </div>
     </aside>
+
+
+
+    console.log(typeof(response))
+       if(users){
+
+        let html = "";
+       users.forEach((user) => { 
+         html += `<option value="${user.username}">${user.username}</option>`; 
+       }); 
+       console.log("html  " + html)
+       //$("#userDropdown").html(html)
+       dropdown.style.display = searchkey && users.length ? "block" : "none"; 
+
+       }else{
+        $("#userDropdown").html("<option>no data</option>");
+       }

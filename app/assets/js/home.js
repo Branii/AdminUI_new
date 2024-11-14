@@ -4,21 +4,21 @@ $(function () {
 
     let html = "";
     const status = {
-        1: "Deposit",
-        2: "Win Bonus",
-        3: "Bet Awarded",
-        4: "Withdrawal",
-        5: "Bet Cancelled",
-        6: "Bet Deduct",
-        7: "Rebates",
-        8: "Self Rebate",
-        9: "Send Red Envelope",
-        10: "Receive Red Envelope",
-        11: "Bet Refund"
+      1: "Deposit",
+      2: "Win Bonus",
+      3: "Bet Awarded",
+      4: "Withdrawal",
+      5: "Bet Cancelled",
+      6: "Bet Deduct",
+      7: "Rebates",
+      8: "Self Rebate",
+      9: "Send Red Envelope",
+      10: "Receive Red Envelope",
+      11: "Bet Refund"
     }
 
     data.forEach((item) => {
-        html += `
+      html += `
                   <tr>
                       <td>${item.order_id.substring(0, 7)}</td>
                       <td>${item.username}</td>
@@ -27,17 +27,17 @@ $(function () {
                       <td>${item.balance}</td>
                       <td>${item.dateTime}</td>
                       <td>${item.order_id}</td>
-                      <td>Complete</td>
+                      <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
+                      <td><i class='bx bx-info-circle' style='color:#868c87;font-size:18px;cursor:pointer;' ></i></td>
                   </tr>
               `;
     });
     return html;
-};
+  };
 
   const render = (data) => {
-
     var html = AccountTransactions(data);
-$("#dataContainer").html(html);
+    $("#dataContainer").html(html);
   };
 
   let currentPage = 1;
@@ -48,18 +48,28 @@ $("#dataContainer").html(html);
       const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
       const data = await response.json();
 
-      console.log(data)
+      console.log(response)
+
+      $("#mask").LoadingOverlay("hide")
 
       // Render table data
       render(data.users);
 
       // Render pagination
       renderPagination(data.totalPages, page);
-      //document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
+      document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
+
+  const getOrderIds = () => {
+    $.post('../admin/getOrderid/', function(response) {
+       console.log(response)
+
+    })
+  }
+  //getOrderIds();
 
   function renderPagination(totalPages, currentPage) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -109,7 +119,6 @@ $("#dataContainer").html(html);
           currentPage = newPage;
           document.getElementById("paging_info").innerHTML = 'Page ' + currentPage + ' of ' + totalPages + ' pages'
           fetchTrasaction(currentPage);
-
         }
       });
     });
@@ -153,10 +162,67 @@ $("#dataContainer").html(html);
   })
 
   $(".refresh").click(function () {
-    $("#dataContainer").LoadingOverlay("show", {
-      background: "rgb(238,243,255,0.5)",
-      size: 5
+    $("#mask").LoadingOverlay("show", {
+      background: "rgb(90,106,133,0.1)",
+      size: 3
     });
+    fetchTrasaction(currentPage);
   })
+
+  $(".execute").click(function () {
+    console.log("spinning");
+    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
+  })
+  let debounceTimeout;
+  $(".username").keyup(function () {
+    let searchkey = $(this).val()
+    const dropdown = $("#userDropdown");
+    dropdown.empty(); // Clear existing options 
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      $.post(`../admin/filterusername/${searchkey}`, function (response) {
+        if (response) {
+          $("#userDropdown").show()
+          let html = "";
+          response.forEach((user) => {
+            html += `<div value="${user.username}" class="option">${user.username}</div>`;
+          });
+          console.log("html  " + html)
+          $("#userDropdown").html(html)
+          $("#userDropdown").show()
+        } else {
+          $("#userDropdown").show()
+        }
+      })
+
+    }, 300);
+
+  })
+
+
+  $(document).on('click', '.option', function () {
+    $(".username").val($(this).text())
+    $("#userDropdown").hide()
+  })
+
+
+
+  $(document).on('click', '.executetrans', function () {
+    const username = $(".username").val()
+    const order_id = $(".orderid").val()
+    const odertype = $(".ordertype").val()
+    const startdate = $(".startdate").val()
+    const enddate =   $(".enddate").val()
+      console.log("spinning");
+    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
+     
+    console.log(username,order_id,odertype,startdate,enddate)
+   
+  })
+
+  
+
+
+
 
 });

@@ -24,5 +24,6 @@ spl_autoload_register(function ($className) use ($modules) {
         }
     }
 });
+
 (new ModernPHPException())->start();
 (new App());
