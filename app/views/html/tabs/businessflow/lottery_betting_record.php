@@ -15,7 +15,7 @@
     background-color: #f9f9f9;
   }
 
-  .top-left-btn {
+  .tops-left-btn {
     position: absolute;
     top: 10px;
     /* Distance from the top */
@@ -29,7 +29,7 @@
     cursor: pointer;
   }
 
-  .top-center {
+  .tops-center {
     position: absolute;
     top: 50%;
     /* Vertically centers the button */
@@ -44,7 +44,7 @@
     cursor: pointer;
   }
 
-  .top-right-btn {
+  .tops-right-btn {
     position: absolute;
     top: 10px;
     /* Distance from the top */
@@ -58,7 +58,7 @@
     cursor: pointer;
   }
 
-  .topp-right {
+  .topps-right {
     position: absolute;
     top: 10px;
     /* Distance from the top */
@@ -72,7 +72,7 @@
     cursor: pointer;
   }
 
-  .table-wrapper {
+  .table-wrappers {
     overflow: hidden;
     /* Hide the default scrollbar */
     white-space: nowrap;
@@ -88,13 +88,13 @@
     z-index: 10;
   }
 
-  .queryholder {
+  .queryholders {
     width: 19%;
     margin-right: 5px;
     background-color: #FFF;
   }
 
-  .user-option {
+  .user-options {
     width: 100%;
     /* Makes each option fill the select width */
     white-space: nowrap;
@@ -104,67 +104,70 @@
     border-bottom: solid 1px #ccc;
   }
 
-  .user-option:hover {
+  .user-options:hover {
     background-color: #eee;
   }
 
-  #userDropdown {
+  #userDropdowns {
     max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
 </style>
-
 <div class="card w-100 position-relative overflow-hidden">
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Account Transactions</h4>
+    <h4 class="card-title mb-0">LOTTERY BETTING RECORDS</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-
-
-        <input type="text" class="form-control queryholder username" id="nametext" aria-describedby="name"
-          placeholder="Name" />
-        <div id="userDropdown" class=" form-control " size="5"
-          style="background-color:#fff;position: absolute; top: 90%; width: 19%; display: none; z-index: 1000;">
-
+      
+        <input type="text" class="form-control queryholders usernames" id="nametext" aria-describedby="name" placeholder="Enter Name" />
+        <div id="userDropdowns" class="form-control" size="5" style="background-color:#fff; position: absolute; top: 90%; width: 19%; display: none; z-index: 1000;">
         </div>
 
 
-        <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"placeholder ="enter oderid">
-
-
-        <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
-          <option value="all">all</option>
-          <option value="1">Deposit</option>
-          <option value="2">Win Bonus</option>
-          <option value="3">Bet Awarded</option>
-          <option value="4">Withdrawal</option>
-          <option value="6">Bet Cancelled</option>
+        <select name="order_type" class="form-control form-select queryholders selectlottery" data-bs-placeholder="Select Type" placeholder="slect lottery type">
+          
         </select>
 
-        <input type="date" class="form-control queryholder startdate" id="nametext" aria-describedby="name" placeholder="Name" />
+        <select name="order_type" class="form-control form-select queryholders ordertype" data-bs-placeholder="Select Type">
+          <option value="all">all</option>
+          <option value="1">Win</option>
+          <option value="2">Loss</option>
+          <option value="3">Pending</option>
+          <option value="4">Refund</option>
+        </select>
 
-        <input type="date" class="form-control queryholder enddate" id="nametext" aria-describedby="name" placeholder="Name" />
+        <select name="order_type" class="form-control form-select queryholders ordertype" data-bs-placeholder="Select Type">
+          <option value="all">all</option>
+          <option value="1">Settled</option>
+          <option value="2">Unsettled</option>
+          <option value="6">Cancelled Bet</option>
+          <option value="4">Refund</option>
+          <option value="4">Deleted</option>
+        </select>
 
+        <input type="date" class="form-control queryholders startdate" id="nametext" aria-describedby="name" placeholder="Name" />
+
+        <input type="date" class="form-control queryholders enddate" id="nametext" aria-describedby="name" placeholder="Name" />
 
       </div>
     </span>
     <span class="top-center" aria-label=" navigation example">
       <!--enter is free-->
     </span>
-    <span class="topp-right" id="paginations" aria-label="Page navigation example">
+    <span class="topps-right" id="paginations" aria-label="Page navigation example">
 
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player refresh" value="right" aria-label="Refresh"
+        <button type="button" class="btn bg-white-subtle player betrefresh" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute"
+        <button type="button" class="btn bg-white-subtle executebet" value="end" aria-label="Execute"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
           <i class='bx bx-check-double loader' style="font-size:20px"></i>
         </button>
@@ -175,40 +178,69 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrappers" id="masks" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered">
         <thead class="text-dark fs-4">
           <tr>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">ID Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0">
+                Bet Order ID</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Issue Number</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"> Amount </h6>
+              <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Balance</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Game Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Date/Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Bet Time</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction ID</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Prize</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Number of Bets</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Unit Stake</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Multiplier</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Bet Amount</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Rebate Amount</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Status</h6>
             </th>
             <th>
+              <h6 class="fs-4 fw-semibold mb-0">IP</h6>
+            </th>
+
+            <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
             </th>
           </tr>
         </thead>
-        <tbody id="dataContainer">
+        <tbody id="lotterydataContainer">
 
           <!--Dynamic content here-->
 
@@ -217,29 +249,29 @@
     </div>
   </div>
   <div class="px-4 py-3 border-top pager">
-    <span class="top-left-btn">
+    <span class="tops-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="start">
+        <button type="button" class="btn bg-white-subtle players" value="betstart">
           <i class='bx bx-chevrons-left' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="left">
+        <button type="button" class="btn bg-white-subtle players" value="betleft">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="right">
+        <button type="button" class="btn bg-white-subtle players" value="betright">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end">
+        <button type="button" class="btn bg-white-subtle players" value="betend">
           <i class='bx bx-chevrons-right' style="font-size:20px"></i>
         </button>
       </div>
     </span>
-    <span class="top-center" aria-label=" navigation example">
+    <span class="tops-center" aria-label=" navigation example">
 
-      <span id="paging_info" style="color:#aaa">---</span>
+      <span id="paging_infos" style="color:#aaa">---</span>
 
     </span>
-    <span class="top-right" id="pagination" aria-label="Page navigation example">
+    <span class="tops-right" id="paginationss" aria-label="Page navigation example">
 
       <!--Dynamic pagination-->
 

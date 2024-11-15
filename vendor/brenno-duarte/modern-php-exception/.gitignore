@@ -1,6 +1,0 @@
-vendor/
-composer.lock
-debug.php
-debug-test.php
-tests.php
-ModernPHPExceptionLogs.log

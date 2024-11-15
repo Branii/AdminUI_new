@@ -1,7 +1,8 @@
 $(function () {
+  //NOTE -
+  //////////////ACCOUNT TRANSACTION-//////////
 
   const AccountTransactions = (data) => {
-
     let html = "";
     const status = {
       1: "Deposit",
@@ -14,8 +15,8 @@ $(function () {
       8: "Self Rebate",
       9: "Send Red Envelope",
       10: "Receive Red Envelope",
-      11: "Bet Refund"
-    }
+      11: "Bet Refund",
+    };
 
     data.forEach((item) => {
       html += `
@@ -45,31 +46,26 @@ $(function () {
 
   async function fetchTrasaction(page) {
     try {
-      const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
+      const response = await fetch(
+        `../admin/transactiondata/${page}/${pageLimit}`
+      );
       const data = await response.json();
+      console.log(response);
 
-      console.log(response)
-
-      $("#mask").LoadingOverlay("hide")
+      $("#mask").LoadingOverlay("hide");
 
       // Render table data
       render(data.users);
 
       // Render pagination
       renderPagination(data.totalPages, page);
-      document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
+      document.getElementById("paging_info").innerHTML =
+        "Page " + page + " of " + data.totalPages + " pages";
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
 
-  const getOrderIds = () => {
-    $.post('../admin/getOrderid/', function(response) {
-       console.log(response)
-
-    })
-  }
-  //getOrderIds();
 
   function renderPagination(totalPages, currentPage) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -77,8 +73,9 @@ $(function () {
     // Previous Button
     pagLink += `
               <li class='page-item ${currentPage === 1 ? "disabled" : ""}'>
-                  <a class='page-link' href='#' data-page='${currentPage - 1
-      }'><i class='bx bx-chevron-left'></i></a>
+                  <a class='page-link' href='#' data-page='${
+                    currentPage - 1
+                  }'><i class='bx bx-chevron-left'></i></a>
               </li>
           `;
 
@@ -99,16 +96,17 @@ $(function () {
 
     // Next Button
     pagLink += `
-              <li class='page-item ${currentPage === totalPages ? "disabled" : ""
-      }'>
-                  <a class='page-link' href='#' data-page='${currentPage + 1
-      }'><i class='bx bx-chevron-right'></i></a>
+              <li class='page-item ${
+                currentPage === totalPages ? "disabled" : ""
+              }'>
+                  <a class='page-link' href='#' data-page='${
+                    currentPage + 1
+                  }'><i class='bx bx-chevron-right'></i></a>
               </li>
           `;
 
     pagLink += "</ul>";
     document.getElementById("pagination").innerHTML = pagLink;
-
 
     // Add click event listeners to pagination links
     document.querySelectorAll("#pagination .page-link").forEach((link) => {
@@ -117,112 +115,98 @@ $(function () {
         const newPage = parseInt(this.getAttribute("data-page"));
         if (newPage > 0 && newPage <= totalPages) {
           currentPage = newPage;
-          document.getElementById("paging_info").innerHTML = 'Page ' + currentPage + ' of ' + totalPages + ' pages'
+          document.getElementById("paging_info").innerHTML =
+            "Page " + currentPage + " of " + totalPages + " pages";
           fetchTrasaction(currentPage);
         }
       });
     });
   }
 
-  fetchTrasaction(currentPage);
-
+   fetchTrasaction(currentPage);
 
   $(".player").click(function () {
-
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapper");
     const tableWrappers = document.querySelector(".table-wrapper");
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = {
-      behavior: 'smooth',
+      behavior: "smooth",
     };
     if (tableWrapper.length) {
-
       switch (direction) {
-        case 'left':
+        case "left":
           tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
           break;
-        case 'right':
+        case "right":
           tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
           break;
-        case 'start':
+        case "start":
           // Scroll to the absolute start (leftmost position)
-          tableWrapper.animate({ scrollLeft: 0 }, 'slow');
+          tableWrapper.animate({ scrollLeft: 0 }, "slow");
           break;
-        case 'end':
-          const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-          tableWrapper.animate({ scrollLeft: maxScrollLeft }, 'slow');
+        case "end":
+          const maxScrollLeft =
+            tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+          tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
           break;
         default:
           break;
       }
-
-
     }
-  })
+  });
 
   $(".refresh").click(function () {
     $("#mask").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
-      size: 3
+      size: 3,
     });
     fetchTrasaction(currentPage);
-  })
+  });
 
   $(".execute").click(function () {
     console.log("spinning");
-    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
-  })
+    $(".loader").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
+  });
   let debounceTimeout;
   $(".username").keyup(function () {
-    let searchkey = $(this).val()
+    let searchkey = $(this).val();
     const dropdown = $("#userDropdown");
-    dropdown.empty(); // Clear existing options 
+    dropdown.empty(); // Clear existing options
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
       $.post(`../admin/filterusername/${searchkey}`, function (response) {
         if (response) {
-          $("#userDropdown").show()
+          $("#userDropdown").show();
           let html = "";
           response.forEach((user) => {
             html += `<div value="${user.username}" class="option">${user.username}</div>`;
           });
-          console.log("html  " + html)
-          $("#userDropdown").html(html)
-          $("#userDropdown").show()
+          console.log("html  " + html);
+          $("#userDropdown").html(html);
+          $("#userDropdown").show();
         } else {
-          $("#userDropdown").show()
+          $("#userDropdown").show();
         }
-      })
-
+      });
     }, 300);
+  });
 
-  })
+  $(document).on("click", ".option", function () {
+    $(".username").val($(this).text());
+    $("#userDropdown").hide();
+  });
 
-
-  $(document).on('click', '.option', function () {
-    $(".username").val($(this).text())
-    $("#userDropdown").hide()
-  })
-
-
-
-  $(document).on('click', '.executetrans', function () {
-    const username = $(".username").val()
-    const order_id = $(".orderid").val()
-    const odertype = $(".ordertype").val()
-    const startdate = $(".startdate").val()
-    const enddate =   $(".enddate").val()
-      console.log("spinning");
-    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
-     
-    console.log(username,order_id,odertype,startdate,enddate)
-   
-  })
-
-  
-
-
+  $(document).on("click", ".executetrans", function () {
+    const username = $(".username").val();
+    const order_id = $(".orderid").val();
+    const odertype = $(".ordertype").val();
+    const startdate = $(".startdate").val();
+    const enddate = $(".enddate").val();
+    console.log("spinning");
+    $(".loader").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
+    console.log(username, order_id, odertype, startdate, enddate);
+  });
 
 
 });

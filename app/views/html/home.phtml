@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  
   <title>Limvo Admin</title>
   <style>
     .chrome__tab {
@@ -88,7 +89,7 @@
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="<?php echo BASE_URL; ?>main/index.html" class="text-nowrap logo-img">
             <img src="<?php echo BASE_URL; ?>assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="<?php echo BASE_URL; ?>assets/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -975,11 +976,11 @@
           </div>
 
           <div class="chrome__tab game_getting_statistics">
-            <?php include "tabs/game_getting_statistics.php" ?>
+            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
           </div>
 
           <div class="chrome__tab lottery_betting_record">
-            <?php include "tabs/lottery_betting_record.php" ?>
+            <?php include "tabs/businessflow/lottery_betting_record.php" ?>
           </div>
 
 
@@ -1009,6 +1010,7 @@
     <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/home.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
 
     <!-- solar icons -->
