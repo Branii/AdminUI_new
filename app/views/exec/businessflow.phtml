@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 header('Content-Type: application/json');
+
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
@@ -7,40 +9,30 @@ if ($flag == "filterusername") {
 
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $result = (new BusinessFlow())->filterusername($username);
-    if ($result) {
+    if($result){
         echo json_encode($result);
     } else {
         echo json_encode([['username' => '']]);
     }
-}
-if ($flag == "transactiondata") {
+
+} 
+if($flag == "transactiondata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new BusinessFlow())->FetchTrsansactionData($page, $limit) ?? [];
+    $result = (new BusinessFlowModel())->FetchTrsansactionData($page, $limit) ?? [];
     echo json_encode([
         'users' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
         'trasationIds' => $result['transactionIds']
     ]);
+
 }
 
-
-if ($flag == "lotterydata") {
-
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new BusinessFlow())->fetchBetRecords($page, $limit) ?? [];
-    echo json_encode([
-        'lotterybet' => $result['data'],
-        'totalPages' => ceil($result['totalPages'] / $limit),
-    ]);
-}
-
-if ($flag == "fetchLotteryname") {
-
-    $result = (new BusinessFlow())->fetchLotteryname() ?? [];
+if ($flag == "getOrderid") {
+    $result = (new BusinessFlow())->getOrderid();
     echo json_encode($result);
-}
+} 
+
 
 

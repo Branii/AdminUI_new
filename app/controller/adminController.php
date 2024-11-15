@@ -35,19 +35,19 @@ class adminController extends Controller {
         $this->view->render();
     }
 
- 
-    //NOTE -
-    ////////////// LOTTERY BETTING-//////////
+    public function filtertransactions($username ='',$orderid ='',$ordertype ='',$startdate ='',$enddate ='',$pageNumber,$limit){
+        $this->view('exec/businessflow',[
+            'username' => $username,'orderid' => $orderid,
+            'ordertype' => $ordertype,'startdate' => $startdate,
+            'enddate' => $enddate, 'flag' => 'filtertransactions',
+            'page'=>$pageNumber,'limit'=>$limit,
 
-    public function lotterydata($pageNumber, $limit)
-    {
-        $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'lotterydata']);
+        ]);
         $this->view->render();
     }
 
-    public function fetchLotteryname()
-    {
-        $this->view('exec/businessflow', ['flag' => 'fetchLotteryname']);
+    public function getTransactionBet($transactionId){
+        $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'transactionBet']);
         $this->view->render();
     }
 

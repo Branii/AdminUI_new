@@ -94,17 +94,27 @@
     background-color: #FFF;
   }
 
-  .user-option {
-    width: 100%;
-    /* Makes each option fill the select width */
-    white-space: nowrap;
-    /* Prevents text from wrapping */
-    text-align: left;
-    /* Adds some spacing inside the option */
-    border-bottom: solid 1px #ccc;
+  .queryholderx {
+    width: 19%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
   }
 
-  .user-option:hover {
+  .option {
+    text-align: left;
+    border-bottom: solid 1px #eee;
+    padding: 5px;
+  }
+
+  .option:hover {
     background-color: #eee;
   }
 
@@ -113,9 +123,52 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
+
+  .no-results {
+    text-align: center;
+    /* Center horizontally */
+    vertical-align: middle;
+    /* Center vertically */
+    height: 20px;
+    /* Set a minimum height to ensure centering */
+    border: none;
+  }
+
+  .no-results img {
+    position: relative;
+    top: 100px;
+
+  }
+
+  /* Custom Scrollbar for Webkit Browsers */
+  .table-wrapper::-webkit-scrollbar {
+    width: 5px;
+    /* Slimmer scrollbar width */
+    height: 5px;
+    /* Slimmer scrollbar height for horizontal scrolling */
+  }
+
+  .table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Lighter background for track */
+    border-radius: 5px;
+  }
+
+  .table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* Blue color for thumb */
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+    /* Darker blue on hover */
+  }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
+
   <div class="px-4 py-3 border-bottom">
     <h4 class="card-title mb-0">Account Transactions</h4>
   </div>
@@ -124,31 +177,40 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
+        <input name="username" class="queryholder form-control" id="selected" placeholder="Username"
+          autocomplete="off"></input>
+        <input type="text" class="userId" style="display:none" />
+        <ul class="queryholderx"></ul>
+
+        <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
+          placeholder="enter oderid">
 
 
-        <input type="text" class="form-control queryholder username" id="nametext" aria-describedby="name"
-          placeholder="Name" />
-        <div id="userDropdown" class=" form-control " size="5"
-          style="background-color:#fff;position: absolute; top: 90%; width: 19%; display: none; z-index: 1000;">
-
-        </div>
-
-
-        <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"placeholder ="enter oderid">
-
-
-        <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
-          <option value="all">all</option>
+        <select name="order_type" class="form-control form-select queryholder ordertype"
+          data-bs-placeholder="Select Type">
+          <option value="0">Transaction Type</option>
           <option value="1">Deposit</option>
           <option value="2">Win Bonus</option>
           <option value="3">Bet Awarded</option>
           <option value="4">Withdrawal</option>
-          <option value="6">Bet Cancelled</option>
+          <option value="5">Bet Cancelled</option>
+          <option value="6">Bet Deduct</option>
+          <option value="7">Rebate</option>
+          <option value="8">Self Rebate</option>
+          <option value="9">Send Red Envelope</option>
+          <option value="10">Receive Red Envelope</option>
+          <option value="11">Bet Refund</option>
         </select>
 
-        <input type="date" class="form-control queryholder startdate" id="nametext" aria-describedby="name" placeholder="Name" />
 
-        <input type="date" class="form-control queryholder enddate" id="nametext" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholder startdate" id="nametext" aria-describedby="name"
+          placeholder="Name" />
+
+
+
+        <input type="date" class="form-control queryholder enddate" id="nametext" aria-describedby="name"
+          placeholder="Name" />
+
 
 
       </div>
@@ -210,7 +272,11 @@
         </thead>
         <tbody id="dataContainer">
 
-          <!--Dynamic content here-->
+          <tr class="no-results">
+            <td colspan="9">
+              <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+            </td>
+          </tr>
 
         </tbody>
       </table>
@@ -246,6 +312,67 @@
     </span>
 
   </div>
+
 </div>
+
+<div class="modal fade" id="al-danger-alert" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content modal-filled " style="background-color:#F9F9F9">
+      <div class="modal-body p-4">
+        <div class="text-center text-danger">
+          <i class="ti ti-hexagon-letter-x fs-7"></i>
+          <h4 class="mt-2">Oh snap!</h4>
+          <p class="mt-3" style="color:#aaa">
+            All fields are required!
+            Select one or more data fields to filter.
+          </p>
+          <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
+            Okay
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
 </div>
+
+<div class="card">
+  <div class="card-body">
+    <div id="signup-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="text-center mt-2 mb-4">
+              <div class="d-flex justify-content-between">
+                <div>Transaction Info</div>
+                <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
+              </div>
+            </div>
+
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <table class="table table-bordered table-striped">
+                    <tbody id="row1">
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-6">
+                  <table class="table table-bordered table-striped">
+                    <tbody id="row2">
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </form>
+
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </div>
 </div>
