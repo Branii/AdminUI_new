@@ -94,11 +94,19 @@
     background-color: #FFF;
   }
 
-  /* .select2{
-    width: 19% !important; 
-    margin-right: 5px !important; 
-    background-color: #FFF !important; 
-  } */
+  .queryholderx {
+    width: 19%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
+  }
 
   .option {
     text-align: left;
@@ -131,6 +139,32 @@
     top: 100px;
 
   }
+
+  /* Custom Scrollbar for Webkit Browsers */
+  .table-wrapper::-webkit-scrollbar {
+    width: 5px;
+    /* Slimmer scrollbar width */
+    height: 5px;
+    /* Slimmer scrollbar height for horizontal scrolling */
+  }
+
+  .table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Lighter background for track */
+    border-radius: 5px;
+  }
+
+  .table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* Blue color for thumb */
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+    /* Darker blue on hover */
+  }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
 
@@ -142,15 +176,10 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-
-
-      <select name="username" class="queryholder form-control" id="selected">
-          <option>Select</option>
-          <option value="AK">Alaska</option>
-        </select>
-
-
-
+        <input name="username" class="queryholder form-control" id="selected" placeholder="Username"
+          autocomplete="off"></input>
+        <input type="text" class="userId" style="display:none" />
+        <ul class="queryholderx"></ul>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
           placeholder="enter oderid">
@@ -158,7 +187,7 @@
 
         <select name="order_type" class="form-control form-select queryholder ordertype"
           data-bs-placeholder="Select Type">
-          <option value="all" disabled>Transaction Type</option>
+          <option value="0">Transaction Type</option>
           <option value="1">Deposit</option>
           <option value="2">Win Bonus</option>
           <option value="3">Bet Awarded</option>
@@ -306,7 +335,43 @@
   </div>
 </div>
 
-<button type="button" class="btn mb-1 bg-danger-subtle text-danger  px-4 fs-4 " data-bs-toggle="modal"
-  data-bs-target="#al-danger-alert">
-  Okay
-</button>
+<div class="card">
+  <div class="card-body">
+    <div id="signup-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="text-center mt-2 mb-4">
+              <div class="d-flex justify-content-between">
+                <div>Transaction Info</div>
+                <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
+              </div>
+            </div>
+
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <table class="table table-bordered table-striped">
+                    <tbody id="row1">
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-6">
+                  <table class="table table-bordered table-striped">
+                    <tbody id="row2">
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </form>
+
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </div>
+</div>

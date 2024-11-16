@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
+<html oncontextmenu="return false" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
   data-boxed-layout="full" data-card="shadow">
 
 <head>
@@ -1009,7 +1009,7 @@
     <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/home.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/editable-select.js"></script>
 
@@ -1021,33 +1021,6 @@
     <script
       src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script>
-
-      $(function () {
-        $('#selected').editableSelect({
-
-          // enable filter
-          filter: true,
-
-          // default, fade or slide
-          effects: 'slide',
-
-          // fast, slow or [0-9]+
-          duration: 'fast',
-
-          // Where to append the dropdown list.
-          //appendTo: 'body',
-
-          // "focus" or "manual"
-          trigger: 'focus',
-
-          // callback events
-          onCreate: function () { },
-          onShow: function () { },
-          onHide: function () { },
-          onSelect: function (element) { }
-
-        });
-      })
 
       // document.addEventListener('DOMContentLoaded', function () {
       //   const tableWrapper = document.querySelector('.table-wrapper');

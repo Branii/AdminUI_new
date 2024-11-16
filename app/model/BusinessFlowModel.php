@@ -1,6 +1,6 @@
 <?php 
 
-class BusinessFlow extends MEDOOHelper{
+class BusinessFlowModel extends MEDOOHelper{
 
 
     public static function FetchTrsansactionData($page, $limit): array 
@@ -62,9 +62,36 @@ class BusinessFlow extends MEDOOHelper{
         return $data;
     }
 
-    public static function getUsernameById(string $userId){
+    public static function getUsernameById(mixed $userId){
         $data = parent::query("SELECT username FROM users WHERE uid = :uid",['uid' => $userId])[0]['username'];
         return $data;
     }
+
+    public static function getUserIdByMixedValued(string $mixedValue){
+        $data =  parent::query(
+            "SELECT uid FROM users WHERE uid = :uid OR username = :username",
+            ['uid' => $mixedValue, 'username' => $mixedValue]
+        );
+        return !empty($data) ? $data[0]['uid'] : '0';
+    }
+
+    public static function getBetDataByTransactionBet($betTable,$transactionId){
+        return parent::selectAll($betTable,'*',['bet_code'=>$transactionId]);
+    }
+
+    public static function getTables(){
+        $res = parent::selectAll("gamestable_map", ["game_type", "draw_table", "bet_table", "draw_storage"]); 
+        $mainData = []; 
+        foreach ($res as $data) { 
+            $mainData[$data['game_type']] = $data; 
+        } 
+        return $mainData; 
+    }
+
+    public static function getOpenAndCloseTimesByPeriod(string $period, string $table){
+        return parent::selectAll($table, ["opening_time", "closing_time","draw_number"],['period' => $period]); 
+    }
+
+
  
 }
