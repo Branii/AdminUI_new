@@ -39,8 +39,15 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function getOrderid(){
-        $this->view('exec/businessflow',['flag' => 'getOrderid']);
+    public function filtertransactions($username ='',$orderid ='',$ordertype ='',$startdate ='',$enddate ='',$pageNumber,$limit){
+        $this->view('exec/businessflow',[
+            
+            'username' => $username,'orderid' => $orderid,
+            'ordertype' => $ordertype,'startdate' => $startdate,
+            'enddate' => $enddate, 'flag' => 'filtertransactions',
+            'page'=>$pageNumber,'limit'=>$limit,
+
+        ]);
         $this->view->render();
     }
 

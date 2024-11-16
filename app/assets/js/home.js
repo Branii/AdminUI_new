@@ -48,81 +48,81 @@ $(function () {
       const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
       const data = await response.json();
 
-      console.log(response)
-
       $("#mask").LoadingOverlay("hide")
-
-      // Render table data
       render(data.users);
 
       // Render pagination
-      renderPagination(data.totalPages, page);
+      renderPagination(data.totalPages, page, 'normal');
       document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
 
-  const getOrderIds = () => {
-    $.post('../admin/getOrderid/', function(response) {
-       console.log(response)
+  async function filterTrasaction(page,username,orderid,ordertype,startdate,enddate) {
+    try {
+      const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdate}/${enddate}/${page}/${pageLimit}`);
+      const data = await response.json();
 
-    })
+      $(".loader").removeClass('bx bx-loader bx-spin').addClass('bx bx-check-double');
+      if(data.transactions.length < 1){
+        let html = `
+            <tr class="no-results" >
+            <td colspan="9">
+                 <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+            </td>
+         </tr>`
+         $("#dataContainer").html(html);
+        return 
+      }
+      render(data.transactions);
+
+      // Render pagination
+      renderPagination(data.totalPages, page, 'search',username,orderid,ordertype,startdate,enddate);
+      document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
-  //getOrderIds();
 
-  function renderPagination(totalPages, currentPage) {
+
+  function renderPagination(totalPages, currentPage, pagingType = '',username='',orderid='',ordertype='',startdate='',enddate='') {
+    const createPageLink = (i, label = i, disabled = false, active = false) => 
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
     let pagLink = `<ul class='pagination justify-content-end'>`;
-
+  
     // Previous Button
-    pagLink += `
-              <li class='page-item ${currentPage === 1 ? "disabled" : ""}'>
-                  <a class='page-link' href='#' data-page='${currentPage - 1
-      }'><i class='bx bx-chevron-left'></i></a>
-              </li>
-          `;
-
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+  
     // Page numbers with ellipsis
     for (let i = 1; i <= totalPages; i++) {
-      if (i === currentPage) {
-        pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-      } else if (
-        i === 1 ||
-        i === totalPages ||
-        Math.abs(i - currentPage) <= 2
-      ) {
-        pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
       } else if (i === currentPage - 3 || i === currentPage + 3) {
-        pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
+        pagLink += createPageLink(i, "...", true);
       }
     }
-
+  
     // Next Button
-    pagLink += `
-              <li class='page-item ${currentPage === totalPages ? "disabled" : ""
-      }'>
-                  <a class='page-link' href='#' data-page='${currentPage + 1
-      }'><i class='bx bx-chevron-right'></i></a>
-              </li>
-          `;
-
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
     pagLink += "</ul>";
+  
     document.getElementById("pagination").innerHTML = pagLink;
-
-
-    // Add click event listeners to pagination links
-    document.querySelectorAll("#pagination .page-link").forEach((link) => {
+  
+    // Add click event listeners
+    document.querySelectorAll("#pagination .page-link").forEach(link => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
-        const newPage = parseInt(this.getAttribute("data-page"));
+        const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
-          currentPage = newPage;
-          document.getElementById("paging_info").innerHTML = 'Page ' + currentPage + ' of ' + totalPages + ' pages'
-          fetchTrasaction(currentPage);
+          pagingType === 'search' ? filterTrasaction(newPage,username,orderid,ordertype,startdate,enddate) : fetchTrasaction(newPage);
         }
       });
     });
   }
+  
 
   fetchTrasaction(currentPage);
 
@@ -169,60 +169,55 @@ $(function () {
     fetchTrasaction(currentPage);
   })
 
-  $(".execute").click(function () {
-    console.log("spinning");
-    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
+  let timeout;
+  let userId;
+  function performSearch() {
+    const query = $('.username').val();
+    $.post(`../admin/filterusername/${query}`, function (response) {
+
+      if (typeof response === 'string') {
+        $("#userDropdown").hide();
+      } else if (typeof response === 'object') {
+        let html = ''
+        response.sort();
+        response.forEach((user) => {
+          html += `<div value="${user.uid}" class="option">${user.username}</div>`;
+        });
+        $("#userDropdown").html(html).show()
+      }
+    })
+  }
+
+  $(document).on("input", '.username', function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(performSearch, 300);
   })
-  let debounceTimeout;
-  $(".username").keyup(function () {
-    let searchkey = $(this).val()
-    const dropdown = $("#userDropdown");
-    dropdown.empty(); // Clear existing options 
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-      $.post(`../admin/filterusername/${searchkey}`, function (response) {
-        if (response) {
-          $("#userDropdown").show()
-          let html = "";
-          response.forEach((user) => {
-            html += `<div value="${user.username}" class="option">${user.username}</div>`;
-          });
-          console.log("html  " + html)
-          $("#userDropdown").html(html)
-          $("#userDropdown").show()
-        } else {
-          $("#userDropdown").show()
-        }
-      })
-
-    }, 300);
-
-  })
-
 
   $(document).on('click', '.option', function () {
     $(".username").val($(this).text())
+    userId = $(this).attr('value')
+    $(".userId").val(userId)
+    console.log(userId)
     $("#userDropdown").hide()
   })
 
-
-
   $(document).on('click', '.executetrans', function () {
-    const username = $(".username").val()
-    const order_id = $(".orderid").val()
-    const odertype = $(".ordertype").val()
+    const username = $(".userId").val()
+    const orderid = $(".orderid").val()
+    const ordertype = $(".ordertype").val()
     const startdate = $(".startdate").val()
-    const enddate =   $(".enddate").val()
-      console.log("spinning");
-    $(".loader").remove('bx bx-check-double').addClass('bx bx-loader bx-spin');
-     
-    console.log(username,order_id,odertype,startdate,enddate)
-   
+    const enddate = $(".enddate").val()
+    //console.log(username);
+    $(".loader").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+    setTimeout(() => {
+      filterTrasaction(currentPage,username,orderid,ordertype,startdate,enddate);
+    }, 200);
   })
 
-  
-
-
-
+  // $(document).on('click', function (event) {
+  //   if (!$(event.target).closest('.username, #userDropdown').length) {
+  //     $("#userDropdown").hide(); // Hide dropdown if click is outside input and dropdown
+  //   }
+  // });
 
 });

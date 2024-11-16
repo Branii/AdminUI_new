@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/styles.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/editable-select.css" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>Limvo Admin</title>
   <style>
@@ -52,7 +53,7 @@
       background-color: #ccc;
       /* Blue color for thumb */
       border-radius: 10px;
-      cursor:pointer;
+      cursor: pointer;
     }
 
     .table-wrapper::-webkit-scrollbar-thumb:hover {
@@ -1010,6 +1011,8 @@
     <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/home.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/editable-select.js"></script>
+
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
@@ -1018,6 +1021,33 @@
     <script
       src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script>
+
+      $(function () {
+        $('#selected').editableSelect({
+
+          // enable filter
+          filter: true,
+
+          // default, fade or slide
+          effects: 'slide',
+
+          // fast, slow or [0-9]+
+          duration: 'fast',
+
+          // Where to append the dropdown list.
+          //appendTo: 'body',
+
+          // "focus" or "manual"
+          trigger: 'focus',
+
+          // callback events
+          onCreate: function () { },
+          onShow: function () { },
+          onHide: function () { },
+          onSelect: function (element) { }
+
+        });
+      })
 
       // document.addEventListener('DOMContentLoaded', function () {
       //   const tableWrapper = document.querySelector('.table-wrapper');

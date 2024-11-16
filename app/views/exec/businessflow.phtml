@@ -13,24 +13,42 @@ if ($flag == "filterusername") {
         echo json_encode([['username'=>'']]);
     }
 
-} 
-if($flag == "transactiondata") {
+}else if($flag == "transactiondata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlow())->FetchTrsansactionData($page, $limit) ?? [];
     echo json_encode([
         'users' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit),
-        'trasationIds' => $result['transactionIds']
+        'totalPages' => ceil($result['total'] / $limit)
+    ]);
+
+}else if($flag == "filtertransactions"){
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+
+    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
+    $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
+    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
+    $result = (new BusinessFlow())->FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate) ?? [];
+
+    $bigArr = [];
+    foreach ($result['data'] as $value) {
+        $username = (new BusinessFlow())->getUsernameById($value['uid']);
+        $value['username'] = $username;
+        $bigArr[] = $value;
+    }
+    
+    echo json_encode([
+        'sql' => $result['sql'],
+        'transactions' => $bigArr,
+        'totalPages' => ceil($result['total'] / $limit)
     ]);
 
 }
 
-if ($flag == "getOrderid") {
-    $result = (new BusinessFlow())->getOrderid();
-    echo json_encode($result);
-} 
 
 
 
